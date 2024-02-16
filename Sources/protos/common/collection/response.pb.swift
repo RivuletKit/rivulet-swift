@@ -25,9 +25,91 @@ public struct Com_Rivuletkit_Common_Collection_Response {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// A unique, user defined identifier that can be used to refer to this response from requests.
+  public var id: String {
+    get {return _id ?? String()}
+    set {_id = newValue}
+  }
+  /// Returns true if `id` has been explicitly set.
+  public var hasID: Bool {return self._id != nil}
+  /// Clears the value of `id`. Subsequent reads from it will return its default value.
+  public mutating func clearID() {self._id = nil}
+
+  public var originalRequest: Com_Rivuletkit_Common_Collection_Request {
+    get {return _originalRequest ?? Com_Rivuletkit_Common_Collection_Request()}
+    set {_originalRequest = newValue}
+  }
+  /// Returns true if `originalRequest` has been explicitly set.
+  public var hasOriginalRequest: Bool {return self._originalRequest != nil}
+  /// Clears the value of `originalRequest`. Subsequent reads from it will return its default value.
+  public mutating func clearOriginalRequest() {self._originalRequest = nil}
+
+  /// The time taken by the request to complete. If a number, the unit is milliseconds. If the response is manually created, this can be set to `null`.
+  public var responseTime: Int32 {
+    get {return _responseTime ?? 0}
+    set {_responseTime = newValue}
+  }
+  /// Returns true if `responseTime` has been explicitly set.
+  public var hasResponseTime: Bool {return self._responseTime != nil}
+  /// Clears the value of `responseTime`. Subsequent reads from it will return its default value.
+  public mutating func clearResponseTime() {self._responseTime = nil}
+
+  /// optional bytes timings = 4; // reserve 
+  public var headers: [Com_Rivuletkit_Common_Collection_Header] = []
+
+  public var cookies: [Com_Rivuletkit_Common_Collection_Cookie] = []
+
+  /// The raw text of the response.
+  public var body: String {
+    get {return _body ?? String()}
+    set {_body = newValue}
+  }
+  /// Returns true if `body` has been explicitly set.
+  public var hasBody: Bool {return self._body != nil}
+  /// Clears the value of `body`. Subsequent reads from it will return its default value.
+  public mutating func clearBody() {self._body = nil}
+
+  /// The raw bytes of the response.
+  public var bodyRaw: Data {
+    get {return _bodyRaw ?? Data()}
+    set {_bodyRaw = newValue}
+  }
+  /// Returns true if `bodyRaw` has been explicitly set.
+  public var hasBodyRaw: Bool {return self._bodyRaw != nil}
+  /// Clears the value of `bodyRaw`. Subsequent reads from it will return its default value.
+  public mutating func clearBodyRaw() {self._bodyRaw = nil}
+
+  /// The response status, e.g: '200 OK'
+  public var status: String {
+    get {return _status ?? String()}
+    set {_status = newValue}
+  }
+  /// Returns true if `status` has been explicitly set.
+  public var hasStatus: Bool {return self._status != nil}
+  /// Clears the value of `status`. Subsequent reads from it will return its default value.
+  public mutating func clearStatus() {self._status = nil}
+
+  /// The numerical response code, example: 200, 201, 404, etc.
+  public var code: Int32 {
+    get {return _code ?? 0}
+    set {_code = newValue}
+  }
+  /// Returns true if `code` has been explicitly set.
+  public var hasCode: Bool {return self._code != nil}
+  /// Clears the value of `code`. Subsequent reads from it will return its default value.
+  public mutating func clearCode() {self._code = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
+
+  fileprivate var _id: String? = nil
+  fileprivate var _originalRequest: Com_Rivuletkit_Common_Collection_Request? = nil
+  fileprivate var _responseTime: Int32? = nil
+  fileprivate var _body: String? = nil
+  fileprivate var _bodyRaw: Data? = nil
+  fileprivate var _status: String? = nil
+  fileprivate var _code: Int32? = nil
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
@@ -40,18 +122,83 @@ fileprivate let _protobuf_package = "com.rivuletkit.common.collection"
 
 extension Com_Rivuletkit_Common_Collection_Response: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Response"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "original_request"),
+    3: .standard(proto: "response_time"),
+    5: .same(proto: "headers"),
+    6: .same(proto: "cookies"),
+    7: .same(proto: "body"),
+    8: .standard(proto: "body_raw"),
+    9: .same(proto: "status"),
+    10: .same(proto: "code"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let _ = try decoder.nextFieldNumber() {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self._id) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._originalRequest) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self._responseTime) }()
+      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.headers) }()
+      case 6: try { try decoder.decodeRepeatedMessageField(value: &self.cookies) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self._body) }()
+      case 8: try { try decoder.decodeSingularBytesField(value: &self._bodyRaw) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self._status) }()
+      case 10: try { try decoder.decodeSingularInt32Field(value: &self._code) }()
+      default: break
+      }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._id {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
+    } }()
+    try { if let v = self._originalRequest {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try { if let v = self._responseTime {
+      try visitor.visitSingularInt32Field(value: v, fieldNumber: 3)
+    } }()
+    if !self.headers.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.headers, fieldNumber: 5)
+    }
+    if !self.cookies.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.cookies, fieldNumber: 6)
+    }
+    try { if let v = self._body {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 7)
+    } }()
+    try { if let v = self._bodyRaw {
+      try visitor.visitSingularBytesField(value: v, fieldNumber: 8)
+    } }()
+    try { if let v = self._status {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 9)
+    } }()
+    try { if let v = self._code {
+      try visitor.visitSingularInt32Field(value: v, fieldNumber: 10)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Com_Rivuletkit_Common_Collection_Response, rhs: Com_Rivuletkit_Common_Collection_Response) -> Bool {
+    if lhs._id != rhs._id {return false}
+    if lhs._originalRequest != rhs._originalRequest {return false}
+    if lhs._responseTime != rhs._responseTime {return false}
+    if lhs.headers != rhs.headers {return false}
+    if lhs.cookies != rhs.cookies {return false}
+    if lhs._body != rhs._body {return false}
+    if lhs._bodyRaw != rhs._bodyRaw {return false}
+    if lhs._status != rhs._status {return false}
+    if lhs._code != rhs._code {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

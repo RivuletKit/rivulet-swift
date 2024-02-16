@@ -25,6 +25,67 @@ public struct Com_Rivuletkit_Common_Collection_Auth {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// apikey awsv4 basic bearer digest edgegrid hawk noauth oauth1 oauth2 ntlm
+  public var type: String = String()
+
+  /// reserve
+  public var noauth: Bool {
+    get {return _noauth ?? false}
+    set {_noauth = newValue}
+  }
+  /// Returns true if `noauth` has been explicitly set.
+  public var hasNoauth: Bool {return self._noauth != nil}
+  /// Clears the value of `noauth`. Subsequent reads from it will return its default value.
+  public mutating func clearNoauth() {self._noauth = nil}
+
+  /// The attributes for API Key Authentication.
+  public var apikey: [Com_Rivuletkit_Common_Collection_AuthItem] = []
+
+  /// The attributes for [AWS Auth](http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html)
+  public var awsv4: [Com_Rivuletkit_Common_Collection_AuthItem] = []
+
+  /// The attributes for [Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication)
+  public var basic: [Com_Rivuletkit_Common_Collection_AuthItem] = []
+
+  /// The helper attributes for [Bearer Token Authentication](https://tools.ietf.org/html/rfc6750)
+  public var bearer: [Com_Rivuletkit_Common_Collection_AuthItem] = []
+
+  /// The attributes for [Digest Authentication](https://en.wikipedia.org/wiki/Digest_access_authentication)
+  public var digest: [Com_Rivuletkit_Common_Collection_AuthItem] = []
+
+  /// The attributes for [Akamai EdgeGrid Authentication](https://developer.akamai.com/legacy/introduction/Client_Auth.html)
+  public var edgegrid: [Com_Rivuletkit_Common_Collection_AuthItem] = []
+
+  /// The attributes for [Hawk Authentication](https://github.com/hueniverse/hawk)
+  public var hawk: [Com_Rivuletkit_Common_Collection_AuthItem] = []
+
+  /// The attributes for [NTLM Authentication](https://msdn.microsoft.com/en-us/library/cc237488.aspx)
+  public var ntlm: [Com_Rivuletkit_Common_Collection_AuthItem] = []
+
+  /// The attributes for [OAuth1](https://oauth.net/1/)
+  public var oauth1: [Com_Rivuletkit_Common_Collection_AuthItem] = []
+
+  /// Helper attributes for [OAuth2](https://oauth.net/2/)
+  public var oauth2: [Com_Rivuletkit_Common_Collection_AuthItem] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _noauth: Bool? = nil
+}
+
+public struct Com_Rivuletkit_Common_Collection_AuthItem {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var key: String = String()
+
+  public var value: String = String()
+
+  public var type: String = String()
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -32,6 +93,7 @@ public struct Com_Rivuletkit_Common_Collection_Auth {
 
 #if swift(>=5.5) && canImport(_Concurrency)
 extension Com_Rivuletkit_Common_Collection_Auth: @unchecked Sendable {}
+extension Com_Rivuletkit_Common_Collection_AuthItem: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -40,18 +102,145 @@ fileprivate let _protobuf_package = "com.rivuletkit.common.collection"
 
 extension Com_Rivuletkit_Common_Collection_Auth: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Auth"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "type"),
+    2: .same(proto: "noauth"),
+    3: .same(proto: "apikey"),
+    4: .same(proto: "awsv4"),
+    5: .same(proto: "basic"),
+    6: .same(proto: "bearer"),
+    7: .same(proto: "digest"),
+    8: .same(proto: "edgegrid"),
+    9: .same(proto: "hawk"),
+    10: .same(proto: "ntlm"),
+    11: .same(proto: "oauth1"),
+    12: .same(proto: "oauth2"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let _ = try decoder.nextFieldNumber() {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.type) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self._noauth) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.apikey) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.awsv4) }()
+      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.basic) }()
+      case 6: try { try decoder.decodeRepeatedMessageField(value: &self.bearer) }()
+      case 7: try { try decoder.decodeRepeatedMessageField(value: &self.digest) }()
+      case 8: try { try decoder.decodeRepeatedMessageField(value: &self.edgegrid) }()
+      case 9: try { try decoder.decodeRepeatedMessageField(value: &self.hawk) }()
+      case 10: try { try decoder.decodeRepeatedMessageField(value: &self.ntlm) }()
+      case 11: try { try decoder.decodeRepeatedMessageField(value: &self.oauth1) }()
+      case 12: try { try decoder.decodeRepeatedMessageField(value: &self.oauth2) }()
+      default: break
+      }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.type.isEmpty {
+      try visitor.visitSingularStringField(value: self.type, fieldNumber: 1)
+    }
+    try { if let v = self._noauth {
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 2)
+    } }()
+    if !self.apikey.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.apikey, fieldNumber: 3)
+    }
+    if !self.awsv4.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.awsv4, fieldNumber: 4)
+    }
+    if !self.basic.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.basic, fieldNumber: 5)
+    }
+    if !self.bearer.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.bearer, fieldNumber: 6)
+    }
+    if !self.digest.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.digest, fieldNumber: 7)
+    }
+    if !self.edgegrid.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.edgegrid, fieldNumber: 8)
+    }
+    if !self.hawk.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.hawk, fieldNumber: 9)
+    }
+    if !self.ntlm.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.ntlm, fieldNumber: 10)
+    }
+    if !self.oauth1.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.oauth1, fieldNumber: 11)
+    }
+    if !self.oauth2.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.oauth2, fieldNumber: 12)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Com_Rivuletkit_Common_Collection_Auth, rhs: Com_Rivuletkit_Common_Collection_Auth) -> Bool {
+    if lhs.type != rhs.type {return false}
+    if lhs._noauth != rhs._noauth {return false}
+    if lhs.apikey != rhs.apikey {return false}
+    if lhs.awsv4 != rhs.awsv4 {return false}
+    if lhs.basic != rhs.basic {return false}
+    if lhs.bearer != rhs.bearer {return false}
+    if lhs.digest != rhs.digest {return false}
+    if lhs.edgegrid != rhs.edgegrid {return false}
+    if lhs.hawk != rhs.hawk {return false}
+    if lhs.ntlm != rhs.ntlm {return false}
+    if lhs.oauth1 != rhs.oauth1 {return false}
+    if lhs.oauth2 != rhs.oauth2 {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Com_Rivuletkit_Common_Collection_AuthItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".AuthItem"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "key"),
+    2: .same(proto: "value"),
+    3: .same(proto: "type"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.key) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.value) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.type) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.key.isEmpty {
+      try visitor.visitSingularStringField(value: self.key, fieldNumber: 1)
+    }
+    if !self.value.isEmpty {
+      try visitor.visitSingularStringField(value: self.value, fieldNumber: 2)
+    }
+    if !self.type.isEmpty {
+      try visitor.visitSingularStringField(value: self.type, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Com_Rivuletkit_Common_Collection_AuthItem, rhs: Com_Rivuletkit_Common_Collection_AuthItem) -> Bool {
+    if lhs.key != rhs.key {return false}
+    if lhs.value != rhs.value {return false}
+    if lhs.type != rhs.type {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

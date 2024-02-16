@@ -20,14 +20,90 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+/// A request represents an HTTP request. If a string, the string is assumed to be the request URL and the method is assumed to be 'GET'.
 public struct Com_Rivuletkit_Common_Collection_Request {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  public var url: Com_Rivuletkit_Common_Collection_URL {
+    get {return _storage._url ?? Com_Rivuletkit_Common_Collection_URL()}
+    set {_uniqueStorage()._url = newValue}
+  }
+  /// Returns true if `url` has been explicitly set.
+  public var hasURL: Bool {return _storage._url != nil}
+  /// Clears the value of `url`. Subsequent reads from it will return its default value.
+  public mutating func clearURL() {_uniqueStorage()._url = nil}
+
+  public var auth: Com_Rivuletkit_Common_Collection_Auth {
+    get {return _storage._auth ?? Com_Rivuletkit_Common_Collection_Auth()}
+    set {_uniqueStorage()._auth = newValue}
+  }
+  /// Returns true if `auth` has been explicitly set.
+  public var hasAuth: Bool {return _storage._auth != nil}
+  /// Clears the value of `auth`. Subsequent reads from it will return its default value.
+  public mutating func clearAuth() {_uniqueStorage()._auth = nil}
+
+  /// Using the Proxy, you can configure your custom proxy into the postman for particular url match.
+  public var proxy: Com_Rivuletkit_Common_Collection_ProxyConfig {
+    get {return _storage._proxy ?? Com_Rivuletkit_Common_Collection_ProxyConfig()}
+    set {_uniqueStorage()._proxy = newValue}
+  }
+  /// Returns true if `proxy` has been explicitly set.
+  public var hasProxy: Bool {return _storage._proxy != nil}
+  /// Clears the value of `proxy`. Subsequent reads from it will return its default value.
+  public mutating func clearProxy() {_uniqueStorage()._proxy = nil}
+
+  /// A representation of an ssl certificate.
+  public var certificate: Com_Rivuletkit_Common_Collection_Certificate {
+    get {return _storage._certificate ?? Com_Rivuletkit_Common_Collection_Certificate()}
+    set {_uniqueStorage()._certificate = newValue}
+  }
+  /// Returns true if `certificate` has been explicitly set.
+  public var hasCertificate: Bool {return _storage._certificate != nil}
+  /// Clears the value of `certificate`. Subsequent reads from it will return its default value.
+  public mutating func clearCertificate() {_uniqueStorage()._certificate = nil}
+
+  /// GET PUT POST PATCH DELETE COPY HEAD OPTIONS LINK UNLINK PURGE LOCK UNLOCK PROPFIND VIEW
+  public var method: String {
+    get {return _storage._method ?? String()}
+    set {_uniqueStorage()._method = newValue}
+  }
+  /// Returns true if `method` has been explicitly set.
+  public var hasMethod: Bool {return _storage._method != nil}
+  /// Clears the value of `method`. Subsequent reads from it will return its default value.
+  public mutating func clearMethod() {_uniqueStorage()._method = nil}
+
+  /// A representation for a list of headers.
+  public var headers: [Com_Rivuletkit_Common_Collection_Header] {
+    get {return _storage._headers}
+    set {_uniqueStorage()._headers = newValue}
+  }
+
+  /// This field contains the data usually contained in the request body.
+  public var body: Com_Rivuletkit_Common_Collection_Body {
+    get {return _storage._body ?? Com_Rivuletkit_Common_Collection_Body()}
+    set {_uniqueStorage()._body = newValue}
+  }
+  /// Returns true if `body` has been explicitly set.
+  public var hasBody: Bool {return _storage._body != nil}
+  /// Clears the value of `body`. Subsequent reads from it will return its default value.
+  public mutating func clearBody() {_uniqueStorage()._body = nil}
+
+  public var description_p: String {
+    get {return _storage._description_p ?? String()}
+    set {_uniqueStorage()._description_p = newValue}
+  }
+  /// Returns true if `description_p` has been explicitly set.
+  public var hasDescription_p: Bool {return _storage._description_p != nil}
+  /// Clears the value of `description_p`. Subsequent reads from it will return its default value.
+  public mutating func clearDescription_p() {_uniqueStorage()._description_p = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
@@ -40,18 +116,123 @@ fileprivate let _protobuf_package = "com.rivuletkit.common.collection"
 
 extension Com_Rivuletkit_Common_Collection_Request: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Request"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "url"),
+    2: .same(proto: "auth"),
+    3: .same(proto: "proxy"),
+    4: .same(proto: "certificate"),
+    5: .same(proto: "method"),
+    6: .same(proto: "headers"),
+    7: .same(proto: "body"),
+    8: .same(proto: "description"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _url: Com_Rivuletkit_Common_Collection_URL? = nil
+    var _auth: Com_Rivuletkit_Common_Collection_Auth? = nil
+    var _proxy: Com_Rivuletkit_Common_Collection_ProxyConfig? = nil
+    var _certificate: Com_Rivuletkit_Common_Collection_Certificate? = nil
+    var _method: String? = nil
+    var _headers: [Com_Rivuletkit_Common_Collection_Header] = []
+    var _body: Com_Rivuletkit_Common_Collection_Body? = nil
+    var _description_p: String? = nil
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _url = source._url
+      _auth = source._auth
+      _proxy = source._proxy
+      _certificate = source._certificate
+      _method = source._method
+      _headers = source._headers
+      _body = source._body
+      _description_p = source._description_p
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let _ = try decoder.nextFieldNumber() {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularMessageField(value: &_storage._url) }()
+        case 2: try { try decoder.decodeSingularMessageField(value: &_storage._auth) }()
+        case 3: try { try decoder.decodeSingularMessageField(value: &_storage._proxy) }()
+        case 4: try { try decoder.decodeSingularMessageField(value: &_storage._certificate) }()
+        case 5: try { try decoder.decodeSingularStringField(value: &_storage._method) }()
+        case 6: try { try decoder.decodeRepeatedMessageField(value: &_storage._headers) }()
+        case 7: try { try decoder.decodeSingularMessageField(value: &_storage._body) }()
+        case 8: try { try decoder.decodeSingularStringField(value: &_storage._description_p) }()
+        default: break
+        }
+      }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      try { if let v = _storage._url {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      } }()
+      try { if let v = _storage._auth {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      } }()
+      try { if let v = _storage._proxy {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      } }()
+      try { if let v = _storage._certificate {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      } }()
+      try { if let v = _storage._method {
+        try visitor.visitSingularStringField(value: v, fieldNumber: 5)
+      } }()
+      if !_storage._headers.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._headers, fieldNumber: 6)
+      }
+      try { if let v = _storage._body {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+      } }()
+      try { if let v = _storage._description_p {
+        try visitor.visitSingularStringField(value: v, fieldNumber: 8)
+      } }()
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Com_Rivuletkit_Common_Collection_Request, rhs: Com_Rivuletkit_Common_Collection_Request) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._url != rhs_storage._url {return false}
+        if _storage._auth != rhs_storage._auth {return false}
+        if _storage._proxy != rhs_storage._proxy {return false}
+        if _storage._certificate != rhs_storage._certificate {return false}
+        if _storage._method != rhs_storage._method {return false}
+        if _storage._headers != rhs_storage._headers {return false}
+        if _storage._body != rhs_storage._body {return false}
+        if _storage._description_p != rhs_storage._description_p {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

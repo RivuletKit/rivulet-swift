@@ -66,45 +66,52 @@ public struct Com_Rivuletkit_Common_Collection_Collection {
   // methods supported on all messages.
 
   public var info: Com_Rivuletkit_Common_Collection_CollectionInfo {
-    get {return _info ?? Com_Rivuletkit_Common_Collection_CollectionInfo()}
-    set {_info = newValue}
+    get {return _storage._info ?? Com_Rivuletkit_Common_Collection_CollectionInfo()}
+    set {_uniqueStorage()._info = newValue}
   }
   /// Returns true if `info` has been explicitly set.
-  public var hasInfo: Bool {return self._info != nil}
+  public var hasInfo: Bool {return _storage._info != nil}
   /// Clears the value of `info`. Subsequent reads from it will return its default value.
-  public mutating func clearInfo() {self._info = nil}
+  public mutating func clearInfo() {_uniqueStorage()._info = nil}
 
-  public var items: [Com_Rivuletkit_Common_Collection_CollectionItem] = []
+  public var items: [Com_Rivuletkit_Common_Collection_CollectionItem] {
+    get {return _storage._items}
+    set {_uniqueStorage()._items = newValue}
+  }
 
-  public var events: [Com_Rivuletkit_Common_Collection_CollectionEvent] = []
+  public var events: [Com_Rivuletkit_Common_Collection_CollectionEvent] {
+    get {return _storage._events}
+    set {_uniqueStorage()._events = newValue}
+  }
 
-  public var variables: [Com_Rivuletkit_Common_Collection_CollectionVariable] = []
+  public var variables: [Com_Rivuletkit_Common_Collection_Variable] {
+    get {return _storage._variables}
+    set {_uniqueStorage()._variables = newValue}
+  }
 
   public var auth: Com_Rivuletkit_Common_Collection_Auth {
-    get {return _auth ?? Com_Rivuletkit_Common_Collection_Auth()}
-    set {_auth = newValue}
+    get {return _storage._auth ?? Com_Rivuletkit_Common_Collection_Auth()}
+    set {_uniqueStorage()._auth = newValue}
   }
   /// Returns true if `auth` has been explicitly set.
-  public var hasAuth: Bool {return self._auth != nil}
+  public var hasAuth: Bool {return _storage._auth != nil}
   /// Clears the value of `auth`. Subsequent reads from it will return its default value.
-  public mutating func clearAuth() {self._auth = nil}
+  public mutating func clearAuth() {_uniqueStorage()._auth = nil}
 
   public var protocolProfileBehavior: Com_Rivuletkit_Common_Collection_ProtocolProfileBehavior {
-    get {return _protocolProfileBehavior ?? Com_Rivuletkit_Common_Collection_ProtocolProfileBehavior()}
-    set {_protocolProfileBehavior = newValue}
+    get {return _storage._protocolProfileBehavior ?? Com_Rivuletkit_Common_Collection_ProtocolProfileBehavior()}
+    set {_uniqueStorage()._protocolProfileBehavior = newValue}
   }
   /// Returns true if `protocolProfileBehavior` has been explicitly set.
-  public var hasProtocolProfileBehavior: Bool {return self._protocolProfileBehavior != nil}
+  public var hasProtocolProfileBehavior: Bool {return _storage._protocolProfileBehavior != nil}
   /// Clears the value of `protocolProfileBehavior`. Subsequent reads from it will return its default value.
-  public mutating func clearProtocolProfileBehavior() {self._protocolProfileBehavior = nil}
+  public mutating func clearProtocolProfileBehavior() {_uniqueStorage()._protocolProfileBehavior = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
-  fileprivate var _info: Com_Rivuletkit_Common_Collection_CollectionInfo? = nil
-  fileprivate var _auth: Com_Rivuletkit_Common_Collection_Auth? = nil
-  fileprivate var _protocolProfileBehavior: Com_Rivuletkit_Common_Collection_ProtocolProfileBehavior? = nil
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 public struct Com_Rivuletkit_Common_Collection_CollectionInfo {
@@ -115,7 +122,7 @@ public struct Com_Rivuletkit_Common_Collection_CollectionInfo {
   /// A collection's friendly name is defined by this field.
   public var name: String = String()
 
-  /// 由于目前校验完整性暂时不实现，故此参数暂设定为可选
+  /// since the verification integrity is not currently implemented, this parameter is temporarily set to optional.
   public var schema: String {
     get {return _schema ?? String()}
     set {_schema = newValue}
@@ -169,90 +176,96 @@ public struct Com_Rivuletkit_Common_Collection_CollectionItem {
   // methods supported on all messages.
 
   /// conmmon
-  public var type: Com_Rivuletkit_Common_Collection_CollectionItemType = .item
+  public var type: Com_Rivuletkit_Common_Collection_CollectionItemType {
+    get {return _storage._type}
+    set {_uniqueStorage()._type = newValue}
+  }
 
-  public var events: [Com_Rivuletkit_Common_Collection_CollectionEvent] = []
+  public var events: [Com_Rivuletkit_Common_Collection_CollectionEvent] {
+    get {return _storage._events}
+    set {_uniqueStorage()._events = newValue}
+  }
 
-  public var variables: [Com_Rivuletkit_Common_Collection_CollectionVariable] = []
+  public var variables: [Com_Rivuletkit_Common_Collection_Variable] {
+    get {return _storage._variables}
+    set {_uniqueStorage()._variables = newValue}
+  }
 
   public var name: String {
-    get {return _name ?? String()}
-    set {_name = newValue}
+    get {return _storage._name ?? String()}
+    set {_uniqueStorage()._name = newValue}
   }
   /// Returns true if `name` has been explicitly set.
-  public var hasName: Bool {return self._name != nil}
+  public var hasName: Bool {return _storage._name != nil}
   /// Clears the value of `name`. Subsequent reads from it will return its default value.
-  public mutating func clearName() {self._name = nil}
+  public mutating func clearName() {_uniqueStorage()._name = nil}
 
   public var description_p: String {
-    get {return _description_p ?? String()}
-    set {_description_p = newValue}
+    get {return _storage._description_p ?? String()}
+    set {_uniqueStorage()._description_p = newValue}
   }
   /// Returns true if `description_p` has been explicitly set.
-  public var hasDescription_p: Bool {return self._description_p != nil}
+  public var hasDescription_p: Bool {return _storage._description_p != nil}
   /// Clears the value of `description_p`. Subsequent reads from it will return its default value.
-  public mutating func clearDescription_p() {self._description_p = nil}
+  public mutating func clearDescription_p() {_uniqueStorage()._description_p = nil}
 
   public var protocolProfileBehavior: Com_Rivuletkit_Common_Collection_ProtocolProfileBehavior {
-    get {return _protocolProfileBehavior ?? Com_Rivuletkit_Common_Collection_ProtocolProfileBehavior()}
-    set {_protocolProfileBehavior = newValue}
+    get {return _storage._protocolProfileBehavior ?? Com_Rivuletkit_Common_Collection_ProtocolProfileBehavior()}
+    set {_uniqueStorage()._protocolProfileBehavior = newValue}
   }
   /// Returns true if `protocolProfileBehavior` has been explicitly set.
-  public var hasProtocolProfileBehavior: Bool {return self._protocolProfileBehavior != nil}
+  public var hasProtocolProfileBehavior: Bool {return _storage._protocolProfileBehavior != nil}
   /// Clears the value of `protocolProfileBehavior`. Subsequent reads from it will return its default value.
-  public mutating func clearProtocolProfileBehavior() {self._protocolProfileBehavior = nil}
+  public mutating func clearProtocolProfileBehavior() {_uniqueStorage()._protocolProfileBehavior = nil}
 
   /// item
   public var id: String {
-    get {return _id ?? String()}
-    set {_id = newValue}
+    get {return _storage._id ?? String()}
+    set {_uniqueStorage()._id = newValue}
   }
   /// Returns true if `id` has been explicitly set.
-  public var hasID: Bool {return self._id != nil}
+  public var hasID: Bool {return _storage._id != nil}
   /// Clears the value of `id`. Subsequent reads from it will return its default value.
-  public mutating func clearID() {self._id = nil}
+  public mutating func clearID() {_uniqueStorage()._id = nil}
 
   public var request: Com_Rivuletkit_Common_Collection_Request {
-    get {return _request ?? Com_Rivuletkit_Common_Collection_Request()}
-    set {_request = newValue}
+    get {return _storage._request ?? Com_Rivuletkit_Common_Collection_Request()}
+    set {_uniqueStorage()._request = newValue}
   }
   /// Returns true if `request` has been explicitly set.
-  public var hasRequest: Bool {return self._request != nil}
+  public var hasRequest: Bool {return _storage._request != nil}
   /// Clears the value of `request`. Subsequent reads from it will return its default value.
-  public mutating func clearRequest() {self._request = nil}
+  public mutating func clearRequest() {_uniqueStorage()._request = nil}
 
   public var responses: Com_Rivuletkit_Common_Collection_Response {
-    get {return _responses ?? Com_Rivuletkit_Common_Collection_Response()}
-    set {_responses = newValue}
+    get {return _storage._responses ?? Com_Rivuletkit_Common_Collection_Response()}
+    set {_uniqueStorage()._responses = newValue}
   }
   /// Returns true if `responses` has been explicitly set.
-  public var hasResponses: Bool {return self._responses != nil}
+  public var hasResponses: Bool {return _storage._responses != nil}
   /// Clears the value of `responses`. Subsequent reads from it will return its default value.
-  public mutating func clearResponses() {self._responses = nil}
+  public mutating func clearResponses() {_uniqueStorage()._responses = nil}
 
   /// folder
-  public var items: [Com_Rivuletkit_Common_Collection_CollectionItem] = []
+  public var items: [Com_Rivuletkit_Common_Collection_CollectionItem] {
+    get {return _storage._items}
+    set {_uniqueStorage()._items = newValue}
+  }
 
   public var auth: Com_Rivuletkit_Common_Collection_Auth {
-    get {return _auth ?? Com_Rivuletkit_Common_Collection_Auth()}
-    set {_auth = newValue}
+    get {return _storage._auth ?? Com_Rivuletkit_Common_Collection_Auth()}
+    set {_uniqueStorage()._auth = newValue}
   }
   /// Returns true if `auth` has been explicitly set.
-  public var hasAuth: Bool {return self._auth != nil}
+  public var hasAuth: Bool {return _storage._auth != nil}
   /// Clears the value of `auth`. Subsequent reads from it will return its default value.
-  public mutating func clearAuth() {self._auth = nil}
+  public mutating func clearAuth() {_uniqueStorage()._auth = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
-  fileprivate var _name: String? = nil
-  fileprivate var _description_p: String? = nil
-  fileprivate var _protocolProfileBehavior: Com_Rivuletkit_Common_Collection_ProtocolProfileBehavior? = nil
-  fileprivate var _id: String? = nil
-  fileprivate var _request: Com_Rivuletkit_Common_Collection_Request? = nil
-  fileprivate var _responses: Com_Rivuletkit_Common_Collection_Response? = nil
-  fileprivate var _auth: Com_Rivuletkit_Common_Collection_Auth? = nil
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 public struct Com_Rivuletkit_Common_Collection_CollectionEvent {
@@ -273,7 +286,7 @@ public struct Com_Rivuletkit_Common_Collection_CollectionEvent {
   /// Clears the value of `id`. Subsequent reads from it will return its default value.
   public mutating func clearID() {self._id = nil}
 
-  /// optional Script script = 3; // 保留属性，暂不实现 
+  /// optional Script script = 3; // reserved attributes, not implemented yet
   public var disabled: Bool {
     get {return _disabled ?? false}
     set {_disabled = newValue}
@@ -288,104 +301,6 @@ public struct Com_Rivuletkit_Common_Collection_CollectionEvent {
   public init() {}
 
   fileprivate var _id: String? = nil
-  fileprivate var _disabled: Bool? = nil
-}
-
-public struct Com_Rivuletkit_Common_Collection_CollectionVariable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  /// A variable ID is a unique user-defined value that identifies the variable within a collection. In traditional terms, this would be a variable name.
-  public var id: String {
-    get {return _id ?? String()}
-    set {_id = newValue}
-  }
-  /// Returns true if `id` has been explicitly set.
-  public var hasID: Bool {return self._id != nil}
-  /// Clears the value of `id`. Subsequent reads from it will return its default value.
-  public mutating func clearID() {self._id = nil}
-
-  /// A variable key is a human friendly value that identifies the variable within a collection. In traditional terms, this would be a variable name.
-  public var key: String {
-    get {return _key ?? String()}
-    set {_key = newValue}
-  }
-  /// Returns true if `key` has been explicitly set.
-  public var hasKey: Bool {return self._key != nil}
-  /// Clears the value of `key`. Subsequent reads from it will return its default value.
-  public mutating func clearKey() {self._key = nil}
-
-  /// The value that a variable holds in this collection. Ultimately, the variables will be replaced by this value, when say running a set of requests from a collection.
-  public var value: String {
-    get {return _value ?? String()}
-    set {_value = newValue}
-  }
-  /// Returns true if `value` has been explicitly set.
-  public var hasValue: Bool {return self._value != nil}
-  /// Clears the value of `value`. Subsequent reads from it will return its default value.
-  public mutating func clearValue() {self._value = nil}
-
-  /// A variable may have multiple types. This field specifies the type of the variable.
-  public var type: String {
-    get {return _type ?? String()}
-    set {_type = newValue}
-  }
-  /// Returns true if `type` has been explicitly set.
-  public var hasType: Bool {return self._type != nil}
-  /// Clears the value of `type`. Subsequent reads from it will return its default value.
-  public mutating func clearType() {self._type = nil}
-
-  /// Variable name
-  public var name: String {
-    get {return _name ?? String()}
-    set {_name = newValue}
-  }
-  /// Returns true if `name` has been explicitly set.
-  public var hasName: Bool {return self._name != nil}
-  /// Clears the value of `name`. Subsequent reads from it will return its default value.
-  public mutating func clearName() {self._name = nil}
-
-  public var description_p: String {
-    get {return _description_p ?? String()}
-    set {_description_p = newValue}
-  }
-  /// Returns true if `description_p` has been explicitly set.
-  public var hasDescription_p: Bool {return self._description_p != nil}
-  /// Clears the value of `description_p`. Subsequent reads from it will return its default value.
-  public mutating func clearDescription_p() {self._description_p = nil}
-
-  /// boolean default false
-  public var system: Bool {
-    get {return _system ?? false}
-    set {_system = newValue}
-  }
-  /// Returns true if `system` has been explicitly set.
-  public var hasSystem: Bool {return self._system != nil}
-  /// Clears the value of `system`. Subsequent reads from it will return its default value.
-  public mutating func clearSystem() {self._system = nil}
-
-  /// boolean default false
-  public var disabled: Bool {
-    get {return _disabled ?? false}
-    set {_disabled = newValue}
-  }
-  /// Returns true if `disabled` has been explicitly set.
-  public var hasDisabled: Bool {return self._disabled != nil}
-  /// Clears the value of `disabled`. Subsequent reads from it will return its default value.
-  public mutating func clearDisabled() {self._disabled = nil}
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _id: String? = nil
-  fileprivate var _key: String? = nil
-  fileprivate var _value: String? = nil
-  fileprivate var _type: String? = nil
-  fileprivate var _name: String? = nil
-  fileprivate var _description_p: String? = nil
-  fileprivate var _system: Bool? = nil
   fileprivate var _disabled: Bool? = nil
 }
 
@@ -395,7 +310,6 @@ extension Com_Rivuletkit_Common_Collection_Collection: @unchecked Sendable {}
 extension Com_Rivuletkit_Common_Collection_CollectionInfo: @unchecked Sendable {}
 extension Com_Rivuletkit_Common_Collection_CollectionItem: @unchecked Sendable {}
 extension Com_Rivuletkit_Common_Collection_CollectionEvent: @unchecked Sendable {}
-extension Com_Rivuletkit_Common_Collection_CollectionVariable: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -420,56 +334,98 @@ extension Com_Rivuletkit_Common_Collection_Collection: SwiftProtobuf.Message, Sw
     6: .same(proto: "protocolProfileBehavior"),
   ]
 
+  fileprivate class _StorageClass {
+    var _info: Com_Rivuletkit_Common_Collection_CollectionInfo? = nil
+    var _items: [Com_Rivuletkit_Common_Collection_CollectionItem] = []
+    var _events: [Com_Rivuletkit_Common_Collection_CollectionEvent] = []
+    var _variables: [Com_Rivuletkit_Common_Collection_Variable] = []
+    var _auth: Com_Rivuletkit_Common_Collection_Auth? = nil
+    var _protocolProfileBehavior: Com_Rivuletkit_Common_Collection_ProtocolProfileBehavior? = nil
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _info = source._info
+      _items = source._items
+      _events = source._events
+      _variables = source._variables
+      _auth = source._auth
+      _protocolProfileBehavior = source._protocolProfileBehavior
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._info) }()
-      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.items) }()
-      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.events) }()
-      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.variables) }()
-      case 5: try { try decoder.decodeSingularMessageField(value: &self._auth) }()
-      case 6: try { try decoder.decodeSingularMessageField(value: &self._protocolProfileBehavior) }()
-      default: break
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularMessageField(value: &_storage._info) }()
+        case 2: try { try decoder.decodeRepeatedMessageField(value: &_storage._items) }()
+        case 3: try { try decoder.decodeRepeatedMessageField(value: &_storage._events) }()
+        case 4: try { try decoder.decodeRepeatedMessageField(value: &_storage._variables) }()
+        case 5: try { try decoder.decodeSingularMessageField(value: &_storage._auth) }()
+        case 6: try { try decoder.decodeSingularMessageField(value: &_storage._protocolProfileBehavior) }()
+        default: break
+        }
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._info {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
-    if !self.items.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.items, fieldNumber: 2)
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      try { if let v = _storage._info {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      } }()
+      if !_storage._items.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._items, fieldNumber: 2)
+      }
+      if !_storage._events.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._events, fieldNumber: 3)
+      }
+      if !_storage._variables.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._variables, fieldNumber: 4)
+      }
+      try { if let v = _storage._auth {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+      } }()
+      try { if let v = _storage._protocolProfileBehavior {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+      } }()
     }
-    if !self.events.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.events, fieldNumber: 3)
-    }
-    if !self.variables.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.variables, fieldNumber: 4)
-    }
-    try { if let v = self._auth {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
-    } }()
-    try { if let v = self._protocolProfileBehavior {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
-    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Com_Rivuletkit_Common_Collection_Collection, rhs: Com_Rivuletkit_Common_Collection_Collection) -> Bool {
-    if lhs._info != rhs._info {return false}
-    if lhs.items != rhs.items {return false}
-    if lhs.events != rhs.events {return false}
-    if lhs.variables != rhs.variables {return false}
-    if lhs._auth != rhs._auth {return false}
-    if lhs._protocolProfileBehavior != rhs._protocolProfileBehavior {return false}
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._info != rhs_storage._info {return false}
+        if _storage._items != rhs_storage._items {return false}
+        if _storage._events != rhs_storage._events {return false}
+        if _storage._variables != rhs_storage._variables {return false}
+        if _storage._auth != rhs_storage._auth {return false}
+        if _storage._protocolProfileBehavior != rhs_storage._protocolProfileBehavior {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -551,81 +507,133 @@ extension Com_Rivuletkit_Common_Collection_CollectionItem: SwiftProtobuf.Message
     11: .same(proto: "auth"),
   ]
 
+  fileprivate class _StorageClass {
+    var _type: Com_Rivuletkit_Common_Collection_CollectionItemType = .item
+    var _events: [Com_Rivuletkit_Common_Collection_CollectionEvent] = []
+    var _variables: [Com_Rivuletkit_Common_Collection_Variable] = []
+    var _name: String? = nil
+    var _description_p: String? = nil
+    var _protocolProfileBehavior: Com_Rivuletkit_Common_Collection_ProtocolProfileBehavior? = nil
+    var _id: String? = nil
+    var _request: Com_Rivuletkit_Common_Collection_Request? = nil
+    var _responses: Com_Rivuletkit_Common_Collection_Response? = nil
+    var _items: [Com_Rivuletkit_Common_Collection_CollectionItem] = []
+    var _auth: Com_Rivuletkit_Common_Collection_Auth? = nil
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _type = source._type
+      _events = source._events
+      _variables = source._variables
+      _name = source._name
+      _description_p = source._description_p
+      _protocolProfileBehavior = source._protocolProfileBehavior
+      _id = source._id
+      _request = source._request
+      _responses = source._responses
+      _items = source._items
+      _auth = source._auth
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularEnumField(value: &self.type) }()
-      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.events) }()
-      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.variables) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self._name) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self._description_p) }()
-      case 6: try { try decoder.decodeSingularMessageField(value: &self._protocolProfileBehavior) }()
-      case 7: try { try decoder.decodeSingularStringField(value: &self._id) }()
-      case 8: try { try decoder.decodeSingularMessageField(value: &self._request) }()
-      case 9: try { try decoder.decodeSingularMessageField(value: &self._responses) }()
-      case 10: try { try decoder.decodeRepeatedMessageField(value: &self.items) }()
-      case 11: try { try decoder.decodeSingularMessageField(value: &self._auth) }()
-      default: break
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularEnumField(value: &_storage._type) }()
+        case 2: try { try decoder.decodeRepeatedMessageField(value: &_storage._events) }()
+        case 3: try { try decoder.decodeRepeatedMessageField(value: &_storage._variables) }()
+        case 4: try { try decoder.decodeSingularStringField(value: &_storage._name) }()
+        case 5: try { try decoder.decodeSingularStringField(value: &_storage._description_p) }()
+        case 6: try { try decoder.decodeSingularMessageField(value: &_storage._protocolProfileBehavior) }()
+        case 7: try { try decoder.decodeSingularStringField(value: &_storage._id) }()
+        case 8: try { try decoder.decodeSingularMessageField(value: &_storage._request) }()
+        case 9: try { try decoder.decodeSingularMessageField(value: &_storage._responses) }()
+        case 10: try { try decoder.decodeRepeatedMessageField(value: &_storage._items) }()
+        case 11: try { try decoder.decodeSingularMessageField(value: &_storage._auth) }()
+        default: break
+        }
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    if self.type != .item {
-      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 1)
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      if _storage._type != .item {
+        try visitor.visitSingularEnumField(value: _storage._type, fieldNumber: 1)
+      }
+      if !_storage._events.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._events, fieldNumber: 2)
+      }
+      if !_storage._variables.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._variables, fieldNumber: 3)
+      }
+      try { if let v = _storage._name {
+        try visitor.visitSingularStringField(value: v, fieldNumber: 4)
+      } }()
+      try { if let v = _storage._description_p {
+        try visitor.visitSingularStringField(value: v, fieldNumber: 5)
+      } }()
+      try { if let v = _storage._protocolProfileBehavior {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+      } }()
+      try { if let v = _storage._id {
+        try visitor.visitSingularStringField(value: v, fieldNumber: 7)
+      } }()
+      try { if let v = _storage._request {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+      } }()
+      try { if let v = _storage._responses {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
+      } }()
+      if !_storage._items.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._items, fieldNumber: 10)
+      }
+      try { if let v = _storage._auth {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
+      } }()
     }
-    if !self.events.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.events, fieldNumber: 2)
-    }
-    if !self.variables.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.variables, fieldNumber: 3)
-    }
-    try { if let v = self._name {
-      try visitor.visitSingularStringField(value: v, fieldNumber: 4)
-    } }()
-    try { if let v = self._description_p {
-      try visitor.visitSingularStringField(value: v, fieldNumber: 5)
-    } }()
-    try { if let v = self._protocolProfileBehavior {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
-    } }()
-    try { if let v = self._id {
-      try visitor.visitSingularStringField(value: v, fieldNumber: 7)
-    } }()
-    try { if let v = self._request {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
-    } }()
-    try { if let v = self._responses {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
-    } }()
-    if !self.items.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.items, fieldNumber: 10)
-    }
-    try { if let v = self._auth {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
-    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Com_Rivuletkit_Common_Collection_CollectionItem, rhs: Com_Rivuletkit_Common_Collection_CollectionItem) -> Bool {
-    if lhs.type != rhs.type {return false}
-    if lhs.events != rhs.events {return false}
-    if lhs.variables != rhs.variables {return false}
-    if lhs._name != rhs._name {return false}
-    if lhs._description_p != rhs._description_p {return false}
-    if lhs._protocolProfileBehavior != rhs._protocolProfileBehavior {return false}
-    if lhs._id != rhs._id {return false}
-    if lhs._request != rhs._request {return false}
-    if lhs._responses != rhs._responses {return false}
-    if lhs.items != rhs.items {return false}
-    if lhs._auth != rhs._auth {return false}
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._type != rhs_storage._type {return false}
+        if _storage._events != rhs_storage._events {return false}
+        if _storage._variables != rhs_storage._variables {return false}
+        if _storage._name != rhs_storage._name {return false}
+        if _storage._description_p != rhs_storage._description_p {return false}
+        if _storage._protocolProfileBehavior != rhs_storage._protocolProfileBehavior {return false}
+        if _storage._id != rhs_storage._id {return false}
+        if _storage._request != rhs_storage._request {return false}
+        if _storage._responses != rhs_storage._responses {return false}
+        if _storage._items != rhs_storage._items {return false}
+        if _storage._auth != rhs_storage._auth {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -673,84 +681,6 @@ extension Com_Rivuletkit_Common_Collection_CollectionEvent: SwiftProtobuf.Messag
   public static func ==(lhs: Com_Rivuletkit_Common_Collection_CollectionEvent, rhs: Com_Rivuletkit_Common_Collection_CollectionEvent) -> Bool {
     if lhs.listen != rhs.listen {return false}
     if lhs._id != rhs._id {return false}
-    if lhs._disabled != rhs._disabled {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Com_Rivuletkit_Common_Collection_CollectionVariable: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".CollectionVariable"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .same(proto: "key"),
-    3: .same(proto: "value"),
-    4: .same(proto: "type"),
-    5: .same(proto: "name"),
-    6: .same(proto: "description"),
-    7: .same(proto: "system"),
-    8: .same(proto: "disabled"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self._id) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self._key) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self._value) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self._type) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self._name) }()
-      case 6: try { try decoder.decodeSingularStringField(value: &self._description_p) }()
-      case 7: try { try decoder.decodeSingularBoolField(value: &self._system) }()
-      case 8: try { try decoder.decodeSingularBoolField(value: &self._disabled) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._id {
-      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
-    } }()
-    try { if let v = self._key {
-      try visitor.visitSingularStringField(value: v, fieldNumber: 2)
-    } }()
-    try { if let v = self._value {
-      try visitor.visitSingularStringField(value: v, fieldNumber: 3)
-    } }()
-    try { if let v = self._type {
-      try visitor.visitSingularStringField(value: v, fieldNumber: 4)
-    } }()
-    try { if let v = self._name {
-      try visitor.visitSingularStringField(value: v, fieldNumber: 5)
-    } }()
-    try { if let v = self._description_p {
-      try visitor.visitSingularStringField(value: v, fieldNumber: 6)
-    } }()
-    try { if let v = self._system {
-      try visitor.visitSingularBoolField(value: v, fieldNumber: 7)
-    } }()
-    try { if let v = self._disabled {
-      try visitor.visitSingularBoolField(value: v, fieldNumber: 8)
-    } }()
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Com_Rivuletkit_Common_Collection_CollectionVariable, rhs: Com_Rivuletkit_Common_Collection_CollectionVariable) -> Bool {
-    if lhs._id != rhs._id {return false}
-    if lhs._key != rhs._key {return false}
-    if lhs._value != rhs._value {return false}
-    if lhs._type != rhs._type {return false}
-    if lhs._name != rhs._name {return false}
-    if lhs._description_p != rhs._description_p {return false}
-    if lhs._system != rhs._system {return false}
     if lhs._disabled != rhs._disabled {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
