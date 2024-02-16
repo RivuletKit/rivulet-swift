@@ -4,20 +4,34 @@
 import PackageDescription
 
 let package = Package(
-    name: "rivulet-swift",
+    name: "RivuletSwift",
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "rivulet-swift",
-            targets: ["rivulet-swift"]),
+            name: "RivuletSwift",
+            targets: ["RivuletSwift"]
+        ),
+    ],
+    dependencies: [
+        // Dependencies declare other packages that this package depends on.
+        .package(name: "SwiftProtobuf", url: "https://github.com/apple/swift-protobuf.git", from: "1.25.2"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "rivulet-swift"),
+            name: "RivuletSwift",
+            dependencies: ["SwiftProtobuf"],
+            path: "Sources/rivulet-swift"
+        ),
+        .target(
+            name: "Protos",
+            dependencies: ["SwiftProtobuf"],
+            path: "Sources/protos"
+        ),
         .testTarget(
-            name: "rivulet-swiftTests",
-            dependencies: ["rivulet-swift"]),
+            name: "RivuletSwiftTests",
+            dependencies: ["RivuletSwift", "Protos"]
+        ),
     ]
 )

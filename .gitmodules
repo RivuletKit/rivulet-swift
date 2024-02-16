@@ -1,0 +1,3 @@
+[submodule "rivulet-proto"]
+	path = rivulet-proto
+	url = https://github.com/RivuletKit/rivulet-proto.git
