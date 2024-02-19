@@ -88,14 +88,7 @@ public struct Com_Rivuletkit_Common_Collection_Body {
   // methods supported on all messages.
 
   /// The type of data associated with this request in this field.
-  public var mode: Com_Rivuletkit_Common_Collection_BodyMode {
-    get {return _mode ?? .raw}
-    set {_mode = newValue}
-  }
-  /// Returns true if `mode` has been explicitly set.
-  public var hasMode: Bool {return self._mode != nil}
-  /// Clears the value of `mode`. Subsequent reads from it will return its default value.
-  public mutating func clearMode() {self._mode = nil}
+  public var mode: Com_Rivuletkit_Common_Collection_BodyMode = .raw
 
   public var raw: String {
     get {return _raw ?? String()}
@@ -107,23 +100,9 @@ public struct Com_Rivuletkit_Common_Collection_Body {
   public mutating func clearRaw() {self._raw = nil}
 
   /// optional string graphql = 3; // reserve
-  public var urlencoded: Com_Rivuletkit_Common_Collection_UrlEncodedParameter {
-    get {return _urlencoded ?? Com_Rivuletkit_Common_Collection_UrlEncodedParameter()}
-    set {_urlencoded = newValue}
-  }
-  /// Returns true if `urlencoded` has been explicitly set.
-  public var hasUrlencoded: Bool {return self._urlencoded != nil}
-  /// Clears the value of `urlencoded`. Subsequent reads from it will return its default value.
-  public mutating func clearUrlencoded() {self._urlencoded = nil}
+  public var urlencoded: [Com_Rivuletkit_Common_Collection_UrlEncodedParameter] = []
 
-  public var formdata: Com_Rivuletkit_Common_Collection_FormParameter {
-    get {return _formdata ?? Com_Rivuletkit_Common_Collection_FormParameter()}
-    set {_formdata = newValue}
-  }
-  /// Returns true if `formdata` has been explicitly set.
-  public var hasFormdata: Bool {return self._formdata != nil}
-  /// Clears the value of `formdata`. Subsequent reads from it will return its default value.
-  public mutating func clearFormdata() {self._formdata = nil}
+  public var formdata: [Com_Rivuletkit_Common_Collection_FormParameter] = []
 
   public var file: Com_Rivuletkit_Common_Collection_BodyFile {
     get {return _file ?? Com_Rivuletkit_Common_Collection_BodyFile()}
@@ -148,10 +127,7 @@ public struct Com_Rivuletkit_Common_Collection_Body {
 
   public init() {}
 
-  fileprivate var _mode: Com_Rivuletkit_Common_Collection_BodyMode? = nil
   fileprivate var _raw: String? = nil
-  fileprivate var _urlencoded: Com_Rivuletkit_Common_Collection_UrlEncodedParameter? = nil
-  fileprivate var _formdata: Com_Rivuletkit_Common_Collection_FormParameter? = nil
   fileprivate var _file: Com_Rivuletkit_Common_Collection_BodyFile? = nil
   fileprivate var _disabled: Bool? = nil
 }
@@ -344,10 +320,10 @@ extension Com_Rivuletkit_Common_Collection_Body: SwiftProtobuf.Message, SwiftPro
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularEnumField(value: &self._mode) }()
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.mode) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self._raw) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._urlencoded) }()
-      case 5: try { try decoder.decodeSingularMessageField(value: &self._formdata) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.urlencoded) }()
+      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.formdata) }()
       case 6: try { try decoder.decodeSingularMessageField(value: &self._file) }()
       case 8: try { try decoder.decodeSingularBoolField(value: &self._disabled) }()
       default: break
@@ -360,18 +336,18 @@ extension Com_Rivuletkit_Common_Collection_Body: SwiftProtobuf.Message, SwiftPro
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._mode {
-      try visitor.visitSingularEnumField(value: v, fieldNumber: 1)
-    } }()
+    if self.mode != .raw {
+      try visitor.visitSingularEnumField(value: self.mode, fieldNumber: 1)
+    }
     try { if let v = self._raw {
       try visitor.visitSingularStringField(value: v, fieldNumber: 2)
     } }()
-    try { if let v = self._urlencoded {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    } }()
-    try { if let v = self._formdata {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
-    } }()
+    if !self.urlencoded.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.urlencoded, fieldNumber: 4)
+    }
+    if !self.formdata.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.formdata, fieldNumber: 5)
+    }
     try { if let v = self._file {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
     } }()
@@ -382,10 +358,10 @@ extension Com_Rivuletkit_Common_Collection_Body: SwiftProtobuf.Message, SwiftPro
   }
 
   public static func ==(lhs: Com_Rivuletkit_Common_Collection_Body, rhs: Com_Rivuletkit_Common_Collection_Body) -> Bool {
-    if lhs._mode != rhs._mode {return false}
+    if lhs.mode != rhs.mode {return false}
     if lhs._raw != rhs._raw {return false}
-    if lhs._urlencoded != rhs._urlencoded {return false}
-    if lhs._formdata != rhs._formdata {return false}
+    if lhs.urlencoded != rhs.urlencoded {return false}
+    if lhs.formdata != rhs.formdata {return false}
     if lhs._file != rhs._file {return false}
     if lhs._disabled != rhs._disabled {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
