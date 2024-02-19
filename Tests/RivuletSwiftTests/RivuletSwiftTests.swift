@@ -52,7 +52,7 @@ final class RivuletSwiftTests: XCTestCase {
         }
 
         // 构造上下文
-        let context = RivuletContext(handle: InHandle())
+        let context = RivuletContext(handle: RivuletUseWKWebViewReply())
 
         // 导入请求
         // let jsonStr = "{\"info\":{\"name\":\"hello\"}}"
