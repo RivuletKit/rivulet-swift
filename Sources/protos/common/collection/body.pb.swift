@@ -97,14 +97,14 @@ public struct Com_Rivuletkit_Common_Collection_Body {
   /// Clears the value of `mode`. Subsequent reads from it will return its default value.
   public mutating func clearMode() {self._mode = nil}
 
-  public var rew: String {
-    get {return _rew ?? String()}
-    set {_rew = newValue}
+  public var raw: String {
+    get {return _raw ?? String()}
+    set {_raw = newValue}
   }
-  /// Returns true if `rew` has been explicitly set.
-  public var hasRew: Bool {return self._rew != nil}
-  /// Clears the value of `rew`. Subsequent reads from it will return its default value.
-  public mutating func clearRew() {self._rew = nil}
+  /// Returns true if `raw` has been explicitly set.
+  public var hasRaw: Bool {return self._raw != nil}
+  /// Clears the value of `raw`. Subsequent reads from it will return its default value.
+  public mutating func clearRaw() {self._raw = nil}
 
   /// optional string graphql = 3; // reserve
   public var urlencoded: Com_Rivuletkit_Common_Collection_UrlEncodedParameter {
@@ -149,7 +149,7 @@ public struct Com_Rivuletkit_Common_Collection_Body {
   public init() {}
 
   fileprivate var _mode: Com_Rivuletkit_Common_Collection_BodyMode? = nil
-  fileprivate var _rew: String? = nil
+  fileprivate var _raw: String? = nil
   fileprivate var _urlencoded: Com_Rivuletkit_Common_Collection_UrlEncodedParameter? = nil
   fileprivate var _formdata: Com_Rivuletkit_Common_Collection_FormParameter? = nil
   fileprivate var _file: Com_Rivuletkit_Common_Collection_BodyFile? = nil
@@ -331,7 +331,7 @@ extension Com_Rivuletkit_Common_Collection_Body: SwiftProtobuf.Message, SwiftPro
   public static let protoMessageName: String = _protobuf_package + ".Body"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "mode"),
-    2: .same(proto: "rew"),
+    2: .same(proto: "raw"),
     4: .same(proto: "urlencoded"),
     5: .same(proto: "formdata"),
     6: .same(proto: "file"),
@@ -345,7 +345,7 @@ extension Com_Rivuletkit_Common_Collection_Body: SwiftProtobuf.Message, SwiftPro
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularEnumField(value: &self._mode) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self._rew) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self._raw) }()
       case 4: try { try decoder.decodeSingularMessageField(value: &self._urlencoded) }()
       case 5: try { try decoder.decodeSingularMessageField(value: &self._formdata) }()
       case 6: try { try decoder.decodeSingularMessageField(value: &self._file) }()
@@ -363,7 +363,7 @@ extension Com_Rivuletkit_Common_Collection_Body: SwiftProtobuf.Message, SwiftPro
     try { if let v = self._mode {
       try visitor.visitSingularEnumField(value: v, fieldNumber: 1)
     } }()
-    try { if let v = self._rew {
+    try { if let v = self._raw {
       try visitor.visitSingularStringField(value: v, fieldNumber: 2)
     } }()
     try { if let v = self._urlencoded {
@@ -383,7 +383,7 @@ extension Com_Rivuletkit_Common_Collection_Body: SwiftProtobuf.Message, SwiftPro
 
   public static func ==(lhs: Com_Rivuletkit_Common_Collection_Body, rhs: Com_Rivuletkit_Common_Collection_Body) -> Bool {
     if lhs._mode != rhs._mode {return false}
-    if lhs._rew != rhs._rew {return false}
+    if lhs._raw != rhs._raw {return false}
     if lhs._urlencoded != rhs._urlencoded {return false}
     if lhs._formdata != rhs._formdata {return false}
     if lhs._file != rhs._file {return false}
