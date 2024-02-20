@@ -5,7 +5,7 @@
 //  Created by Bin on 2024/2/19.
 //
 import Foundation
-import Protos
+import RivuletProtos
 import WebKit
 
 struct WKWebViewManager {

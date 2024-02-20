@@ -1,7 +1,7 @@
 // The Swift Programming Language
 // https://docs.swift.org/swift-book
 
-import Protos
+import RivuletProtos
 import SwiftProtobuf
 
 // 类型别名

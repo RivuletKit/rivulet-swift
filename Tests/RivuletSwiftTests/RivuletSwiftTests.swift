@@ -1,4 +1,4 @@
-import Protos
+import RivuletProtos
 import XCTest
 
 @testable import RivuletSwift

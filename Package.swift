@@ -9,7 +9,7 @@ let package = Package(
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "RivuletSwift",
-            targets: ["RivuletSwift"]
+            targets: ["RivuletSwift", "RivuletProtos"]
         ),
     ],
     dependencies: [
@@ -21,17 +21,17 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "RivuletSwift",
-            dependencies: ["SwiftProtobuf"],
+            dependencies: ["SwiftProtobuf", "RivuletProtos"],
             path: "Sources/rivulet-swift"
         ),
         .target(
-            name: "Protos",
+            name: "RivuletProtos",
             dependencies: ["SwiftProtobuf"],
             path: "Sources/protos"
         ),
         .testTarget(
             name: "RivuletSwiftTests",
-            dependencies: ["RivuletSwift", "Protos"]
+            dependencies: ["RivuletSwift", "RivuletProtos"]
         ),
     ]
 )
