@@ -31,9 +31,21 @@ struct RivuletUseWKWebViewReply: RivuletHandleInterface {
     }
 
     func Reply(_ request: _RivuletRequest) throws -> RivuletResponse? {
+        if request.hasProxy {
+            throw RivuletError.unsupportedFeature("proxy")
+        }
+
+        if request.hasCertificate {
+            throw RivuletError.unsupportedFeature("certificate")
+        }
+
         // 构造请求
         guard var _requestObj = toURLRequest(request.url) else {
             throw URLError(.badURL)
+        }
+
+        if request.hasAuth {
+            try applyAuth(request.auth, to: &_requestObj)
         }
 
         // 配置请求方法
@@ -99,6 +111,84 @@ struct RivuletUseWKWebViewReply: RivuletHandleInterface {
         wvm.load(request: _requestObj) {}
 
         return nil
+    }
+
+    private func applyAuth(_ auth: Com_Rivuletkit_Common_Collection_Auth, to request: inout URLRequest) throws {
+        let kind = auth.type.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        if kind.isEmpty || kind == "noauth" {
+            return
+        }
+
+        switch kind {
+        case "basic":
+            try applyBasicAuth(auth.basic, to: &request)
+        case "bearer":
+            try applyBearerAuth(auth.bearer, to: &request)
+        case "apikey":
+            try applyAPIKeyAuth(auth.apikey, to: &request)
+        default:
+            throw RivuletError.unsupportedAuth(kind)
+        }
+    }
+
+    private func applyBasicAuth(_ items: [Com_Rivuletkit_Common_Collection_AuthItem], to request: inout URLRequest) throws {
+        let mapped = authItemsToMap(items)
+        guard let username = mapped["username"], let password = mapped["password"] else {
+            throw RivuletError.invalidAuth("basic")
+        }
+
+        let credentials = "\(username):\(password)"
+        guard let token = credentials.data(using: .utf8)?.base64EncodedString() else {
+            throw RivuletError.invalidAuth("basic")
+        }
+
+        request.setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
+    }
+
+    private func applyBearerAuth(_ items: [Com_Rivuletkit_Common_Collection_AuthItem], to request: inout URLRequest) throws {
+        let mapped = authItemsToMap(items)
+        let token = mapped["token"] ?? items.first?.value
+        guard let token, !token.isEmpty else {
+            throw RivuletError.invalidAuth("bearer")
+        }
+
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+    }
+
+    private func applyAPIKeyAuth(_ items: [Com_Rivuletkit_Common_Collection_AuthItem], to request: inout URLRequest) throws {
+        let mapped = authItemsToMap(items)
+        guard let key = mapped["key"], !key.isEmpty,
+              let value = mapped["value"], !value.isEmpty
+        else {
+            throw RivuletError.invalidAuth("apikey")
+        }
+
+        let location = (mapped["in"] ?? "header").lowercased()
+        switch location {
+        case "header":
+            request.setValue(value, forHTTPHeaderField: key)
+        case "query":
+            guard let url = request.url, var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+                throw RivuletError.invalidAuth("apikey")
+            }
+            var queryItems = components.queryItems ?? []
+            queryItems.append(URLQueryItem(name: key, value: value))
+            components.queryItems = queryItems
+            guard let updatedURL = components.url else {
+                throw RivuletError.invalidAuth("apikey")
+            }
+            request.url = updatedURL
+        default:
+            throw RivuletError.invalidAuth("apikey")
+        }
+    }
+
+    private func authItemsToMap(_ items: [Com_Rivuletkit_Common_Collection_AuthItem]) -> [String: String] {
+        var mapped: [String: String] = [:]
+        for item in items {
+            mapped[item.key.lowercased()] = item.value
+        }
+        return mapped
     }
 
     func toURLRequest(_ data: Com_Rivuletkit_Common_Collection_URL) -> URLRequest? {

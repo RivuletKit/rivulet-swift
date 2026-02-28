@@ -9,9 +9,12 @@ import SwiftProtobuf
 public typealias _RivuletRequest = Com_Rivuletkit_Common_Collection_Request
 public typealias _RivuletResponse = Com_Rivuletkit_Common_Collection_Response
 
-public enum RivuletError: Error {
+public enum RivuletError: Error, Equatable {
     case emptyResponse
     case syncReplyUnavailable
+    case invalidAuth(String)
+    case unsupportedAuth(String)
+    case unsupportedFeature(String)
 }
 
 // 新接口: Swift 风格

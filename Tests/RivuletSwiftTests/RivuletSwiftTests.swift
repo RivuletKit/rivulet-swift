@@ -66,4 +66,48 @@ final class RivuletSwiftTests: XCTestCase {
             Swift.print("[Reply] request error…")
         }
     }
+
+    func testUnsupportedAuthThrows() throws {
+        let context = RivuletContext(handle: RivuletUseWKWebViewReply())
+        let jsonStr = "{\"url\":{\"protocol\":\"https\",\"host\":\"bin.zmide.com\",\"path\":\"/feed\"},\"method\":\"GET\",\"auth\":{\"type\":\"oauth2\"}}"
+        let request = try RivuletRequest(context: context, jsonString: jsonStr)
+
+        XCTAssertThrowsError(try request.Reply()) { error in
+            guard case RivuletError.unsupportedAuth("oauth2") = error else {
+                return XCTFail("Expected unsupportedAuth(oauth2), got \(error)")
+            }
+        }
+    }
+
+    func testInvalidBasicAuthThrows() throws {
+        let context = RivuletContext(handle: RivuletUseWKWebViewReply())
+        let jsonStr = "{\"url\":{\"protocol\":\"https\",\"host\":\"bin.zmide.com\",\"path\":\"/feed\"},\"method\":\"GET\",\"auth\":{\"type\":\"basic\",\"basic\":[{\"key\":\"username\",\"value\":\"demo\",\"type\":\"string\"}]}}"
+        let request = try RivuletRequest(context: context, jsonString: jsonStr)
+
+        XCTAssertThrowsError(try request.Reply()) { error in
+            guard case RivuletError.invalidAuth("basic") = error else {
+                return XCTFail("Expected invalidAuth(basic), got \(error)")
+            }
+        }
+    }
+
+    func testUnsupportedProxyThrows() throws {
+        let context = RivuletContext(handle: RivuletUseWKWebViewReply())
+        let jsonStr = "{\"url\":{\"protocol\":\"https\",\"host\":\"bin.zmide.com\",\"path\":\"/feed\"},\"method\":\"GET\",\"proxy\":{\"host\":\"127.0.0.1\",\"port\":7890}}"
+        let request = try RivuletRequest(context: context, jsonString: jsonStr)
+
+        XCTAssertThrowsError(try request.Reply()) { error in
+            guard case RivuletError.unsupportedFeature("proxy") = error else {
+                return XCTFail("Expected unsupportedFeature(proxy), got \(error)")
+            }
+        }
+    }
+
+    func testSupportedBearerDoesNotThrow() throws {
+        let context = RivuletContext(handle: RivuletUseWKWebViewReply())
+        let jsonStr = "{\"url\":{\"protocol\":\"https\",\"host\":\"bin.zmide.com\",\"path\":\"/feed\"},\"method\":\"GET\",\"auth\":{\"type\":\"bearer\",\"bearer\":[{\"key\":\"token\",\"value\":\"abc\",\"type\":\"string\"}]}}"
+        let request = try RivuletRequest(context: context, jsonString: jsonStr)
+
+        XCTAssertNoThrow(try request.Reply())
+    }
 }
