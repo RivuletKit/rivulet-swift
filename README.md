@@ -17,6 +17,54 @@ Swift Library for RivuletKit
 
 Behavior spec (v1): `SPEC.md`
 
+## quick start
+
+```swift
+import RivuletSwift
+
+let client = RivuletClient(handler: RivuletUseWKWebViewReply())
+let json = """
+{
+  "url": {"protocol": "https", "host": "example.com", "path": "/api/ping"},
+  "method": "GET"
+}
+"""
+
+let response = try await client.send(jsonString: json)
+print(response.instance.code)
+```
+
+### api migration
+
+- old: `RivuletContext(handle: ...)` -> new: `RivuletContext(handler: ...)`
+- old: `request.Reply()` -> new: `try await request.reply()`
+- preferred high-level api: `RivuletClient.send(request:)` / `RivuletClient.send(jsonString:)`
+
+## transport guidance
+
+- `RivuletUseWKWebViewReply` is an optional transport plugin intended for WebKit-driven scenarios.
+- Prefer transport abstraction (`RivuletTransport`) for production SDK integration.
+- If you need custom behavior (retry, timeout policy, observability, proxy/cert support), implement `RivuletTransport` directly.
+
+### custom transport extension example
+
+```swift
+import Foundation
+import RivuletSwift
+
+struct CustomTransport: RivuletTransport {
+    func send(request: RivuletRequest) async throws -> RivuletResponse {
+        var response = Com_Rivuletkit_Common_Collection_Response()
+        response.originalRequest = request.instance
+        response.code = 200
+        response.status = "200 OK"
+        return request.makeResponse(instance: response)
+    }
+}
+
+let client = RivuletClient(transport: CustomTransport())
+```
+
 ## v1 support matrix
 
 - URL: `raw`, split fields (`protocol/host/path/port/querys`), `disabled` query filtering
@@ -38,6 +86,17 @@ Behavior spec (v1): `SPEC.md`
 - Certificate: unsupported in v1
 
 For unsupported features, SDK should return explicit errors defined in `SPEC.md`.
+
+## error catalog (v1)
+
+- SDK domain (`RivuletError`):
+  - `emptyResponse`
+  - `syncReplyUnavailable`
+  - `invalidAuth(<type>)`
+  - `unsupportedAuth(<type>)`
+  - `unsupportedFeature(<name>)`
+- Runtime failures may bubble as platform errors (for example `URLError(.badURL)`).
+- Canonical behavior semantics are defined in `SPEC.md` section "Error Taxonomy (v1)".
 
 ## development 💽
 

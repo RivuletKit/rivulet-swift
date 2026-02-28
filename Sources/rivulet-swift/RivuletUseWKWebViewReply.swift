@@ -25,12 +25,14 @@ struct WKWebViewManager {
     }
 }
 
-struct RivuletUseWKWebViewReply: RivuletHandleInterface {
-    func Reply(request: RivuletRequest) throws -> RivuletResponse? {
+public struct RivuletUseWKWebViewReply: RivuletHandleInterface {
+    public init() {}
+
+    public func Reply(request: RivuletRequest) throws -> RivuletResponse? {
         return try Reply(request.instance)
     }
 
-    func Reply(_ request: _RivuletRequest) throws -> RivuletResponse? {
+    public func Reply(_ request: _RivuletRequest) throws -> RivuletResponse? {
         if request.hasProxy {
             throw RivuletError.unsupportedFeature("proxy")
         }
@@ -191,7 +193,7 @@ struct RivuletUseWKWebViewReply: RivuletHandleInterface {
         return mapped
     }
 
-    func toURLRequest(_ data: Com_Rivuletkit_Common_Collection_URL) -> URLRequest? {
+    public func toURLRequest(_ data: Com_Rivuletkit_Common_Collection_URL) -> URLRequest? {
         var uc = URLComponents()
         uc.scheme = data.protocol
         uc.host = data.host

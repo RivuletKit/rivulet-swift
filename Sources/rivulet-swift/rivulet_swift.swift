@@ -108,6 +108,10 @@ public final class RivuletRequest: RivuletBaseDataClass<_RivuletRequest> {
         return try await context.transport.send(request: self)
     }
 
+    public func makeResponse(instance: _RivuletResponse) -> RivuletResponse {
+        return RivuletResponse(context: context, instance: instance)
+    }
+
     @available(*, deprecated, renamed: "reply()")
     public func Reply() throws -> RivuletResponse? {
         guard let handler = context.handler else {
