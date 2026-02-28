@@ -1,0 +1,7 @@
+{
+  "url": {
+    "protocol": "https",
+    "path": "/feed"
+  },
+  "method": "GET"
+}

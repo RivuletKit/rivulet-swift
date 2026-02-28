@@ -31,7 +31,10 @@ let package = Package(
         ),
         .testTarget(
             name: "RivuletSwiftTests",
-            dependencies: ["RivuletSwift", "RivuletProtos"]
+            dependencies: ["RivuletSwift", "RivuletProtos"],
+            resources: [
+                .process("Fixtures")
+            ]
         ),
     ]
 )

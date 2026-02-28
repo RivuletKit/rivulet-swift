@@ -1,0 +1,20 @@
+{
+  "url": {
+    "protocol": "https",
+    "host": "bin.zmide.com",
+    "path": "/feed",
+    "querys": [
+      {
+        "key": "q",
+        "value": "rivulet"
+      }
+    ]
+  },
+  "method": "GET",
+  "headers": [
+    {
+      "key": "Accept",
+      "value": "application/json"
+    }
+  ]
+}

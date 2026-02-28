@@ -1,0 +1,14 @@
+{
+  "url": {
+    "protocol": "https",
+    "host": "bin.zmide.com",
+    "path": "/upload"
+  },
+  "method": "POST",
+  "body": {
+    "mode": "FILE",
+    "file": {
+      "src": "/tmp/rivulet/not_exists_payload.bin"
+    }
+  }
+}

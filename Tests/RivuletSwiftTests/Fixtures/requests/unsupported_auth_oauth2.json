@@ -1,0 +1,11 @@
+{
+  "url": {
+    "protocol": "https",
+    "host": "bin.zmide.com",
+    "path": "/feed"
+  },
+  "method": "GET",
+  "auth": {
+    "type": "oauth2"
+  }
+}
