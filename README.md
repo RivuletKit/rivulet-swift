@@ -7,6 +7,38 @@
 
 Swift Library for RivuletKit
 
+## positioning
+
+`rivulet-swift` is a request + response SDK implementation for the unified Rivulet schema.
+
+- Input: unified JSON/protobuf request (`Request`)
+- Runtime: Swift SDK executes the request
+- Output: normalized protobuf response (`Response`)
+
+Behavior spec (v1): `SPEC.md`
+
+## v1 support matrix
+
+- URL: `raw`, split fields (`protocol/host/path/port/querys`), `disabled` query filtering
+- Method: supported, default `GET`
+- Headers: supported, `disabled` filtering
+- Body:
+  - `raw`: supported
+  - `urlencoded`: supported
+  - `formdata`: supported
+  - `file`: supported
+  - `graphql`: unsupported in v1
+- Auth:
+  - `noauth`: supported
+  - `basic`: supported
+  - `bearer`: supported
+  - `apikey`: supported
+  - `awsv4/digest/edgegrid/hawk/ntlm/oauth1/oauth2`: unsupported in v1
+- Proxy: unsupported in v1
+- Certificate: unsupported in v1
+
+For unsupported features, SDK should return explicit errors defined in `SPEC.md`.
+
 ## development 💽
 
 ```
