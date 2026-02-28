@@ -73,6 +73,41 @@ private struct MockValidationTransport: RivuletTransport {
     }
 }
 
+private final class URLProtocolStub: URLProtocol {
+    static var responseData: Data = Data()
+    static var responseHeaders: [String: String] = [:]
+    static var statusCode: Int = 200
+    static var error: Error?
+
+    override class func canInit(with request: URLRequest) -> Bool {
+        return true
+    }
+
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest {
+        return request
+    }
+
+    override func startLoading() {
+        if let error = Self.error {
+            client?.urlProtocol(self, didFailWithError: error)
+            return
+        }
+
+        let url = request.url ?? URL(string: "https://example.com")!
+        let response = HTTPURLResponse(
+            url: url,
+            statusCode: Self.statusCode,
+            httpVersion: "HTTP/1.1",
+            headerFields: Self.responseHeaders
+        )!
+        client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        client?.urlProtocol(self, didLoad: Self.responseData)
+        client?.urlProtocolDidFinishLoading(self)
+    }
+
+    override func stopLoading() {}
+}
+
 final class RivuletSwiftTests: XCTestCase {
     func testRequestJSONFixtureDecode() throws {
         let json = try fixtureText(at: "requests/simple_get.json")
@@ -168,6 +203,53 @@ final class RivuletSwiftTests: XCTestCase {
             XCTFail("Expected network error")
         } catch let error as URLError {
             XCTAssertEqual(error.code, .notConnectedToInternet)
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+        }
+    }
+
+    func testURLSessionTransportMapsResponse() async throws {
+        URLProtocolStub.error = nil
+        URLProtocolStub.responseData = Data("pong".utf8)
+        URLProtocolStub.statusCode = 201
+        URLProtocolStub.responseHeaders = [
+            "Content-Type": "text/plain",
+            "Set-Cookie": "sid=abc; Path=/; HttpOnly"
+        ]
+
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [URLProtocolStub.self]
+        let session = URLSession(configuration: config)
+
+        let transport = RivuletURLSessionTransport(session: session)
+        let client = RivuletClient(transport: transport)
+        let json = try fixtureText(at: "requests/simple_get.json")
+
+        let response = try await client.send(jsonString: json)
+        XCTAssertEqual(response.instance.code, 201)
+        XCTAssertEqual(response.instance.body, "pong")
+        XCTAssertTrue(response.instance.hasBodyRaw)
+        XCTAssertTrue(response.instance.hasOriginalRequest)
+        XCTAssertEqual(response.instance.originalRequest.url.host, "bin.zmide.com")
+        XCTAssertEqual(response.instance.headers.first(where: { $0.key.lowercased() == "content-type" })?.value, "text/plain")
+    }
+
+    func testURLSessionTransportTimeoutBubbles() async throws {
+        URLProtocolStub.error = URLError(.timedOut)
+
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [URLProtocolStub.self]
+        let session = URLSession(configuration: config)
+
+        let transport = RivuletURLSessionTransport(session: session)
+        let client = RivuletClient(transport: transport)
+        let json = try fixtureText(at: "requests/simple_get.json")
+
+        do {
+            _ = try await client.send(jsonString: json)
+            XCTFail("Expected timeout error")
+        } catch let error as URLError {
+            XCTAssertEqual(error.code, .timedOut)
         } catch {
             XCTFail("Unexpected error: \(error)")
         }

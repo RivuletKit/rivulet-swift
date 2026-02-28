@@ -43,6 +43,7 @@ print(response.instance.code)
 ## transport guidance
 
 - `RivuletUseWKWebViewReply` is an optional transport plugin intended for WebKit-driven scenarios.
+- `RivuletURLSessionTransport` is the default recommended transport for production use.
 - Prefer transport abstraction (`RivuletTransport`) for production SDK integration.
 - If you need custom behavior (retry, timeout policy, observability, proxy/cert support), implement `RivuletTransport` directly.
 
@@ -63,6 +64,16 @@ struct CustomTransport: RivuletTransport {
 }
 
 let client = RivuletClient(transport: CustomTransport())
+```
+
+### default URLSession transport
+
+```swift
+import RivuletSwift
+
+let transport = RivuletURLSessionTransport()
+let client = RivuletClient(transport: transport)
+let response = try await client.send(jsonString: json)
 ```
 
 ## v1 support matrix
